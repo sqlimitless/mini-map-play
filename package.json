@@ -1,0 +1,44 @@
+{
+  "name": "mini-map-play",
+  "version": "0.0.1",
+  "main": "dist-electron/main/index.js",
+  "description": "엑셀을 통한 좌표입력시 이동 모션",
+  "author": "lhj",
+  "license": "MIT",
+  "private": true,
+  "keywords": [
+    "electron",
+    "rollup",
+    "vite",
+    "vue3",
+    "vue"
+  ],
+  "debug": {
+    "env": {
+      "VITE_DEV_SERVER_URL": "http://127.0.0.1:3344/"
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build && electron-builder",
+    "preview": "vite preview",
+    "deploy:osx": "electron-builder --mac",
+    "deploy:win": "npm run deploy:win32 && npm run deploy:win64",
+    "deploy:win32": "electron-builder --win nsis:ia32",
+    "deploy:win64": "electron-builder --win nsis:x64"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "electron": "^22.0.0",
+    "electron-builder": "^23.6.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.3",
+    "vite-plugin-electron": "^0.11.1",
+    "vite-plugin-electron-renderer": "^0.11.4",
+    "vue": "^3.2.45",
+    "vue-tsc": "^1.0.24"
+  },
+  "dependencies": {
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.1/xlsx-0.19.1.tgz"
+  }
+}
