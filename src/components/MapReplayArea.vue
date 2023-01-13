@@ -116,7 +116,7 @@ class Drawer {
             divParent.setAttribute('id',`ball_${index}`);
             divParent.style.position = 'absolute';
             divName.innerText = ball.getBallName();
-            divName.style.float = 'left';
+            divName.style.cssText = `position: relative; float:left; left: ${position.x}px; top: ${position.y}px; color:${backColor}`
             divParent.appendChild(divElem)
             divParent.appendChild(divName)
             document.querySelector('#area')?.appendChild(divParent);
