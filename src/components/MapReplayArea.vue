@@ -110,13 +110,13 @@ class Drawer {
             const divName = document.createElement('div');
             const divElem = document.createElement('div');
             divElem.className = 'ball';
-            const position:{x:string,y:string} = ball.getFirstPosition();
             const backColor:string = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-            divElem.style.cssText = `float:left; position:relative; width:10px; height: 10px; border-radius: 50%; border: 1px solid; left: ${position.x}px; top: ${position.y}px; background-color:${backColor}`
+            divElem.style.cssText = `float:left; position:relative; width:10px; height: 10px; border-radius: 50%; border: 1px solid;  background-color:${backColor}`
             divParent.setAttribute('id',`ball_${index}`);
             divParent.style.position = 'absolute';
+            divParent.style.display = 'none';
             divName.innerText = ball.getBallName();
-            divName.style.cssText = `position: relative; float:left; left: ${position.x}px; top: ${position.y}px; color:${backColor}`
+            divName.style.cssText = `position: relative; float:left; color:${backColor}`
             divParent.appendChild(divElem)
             divParent.appendChild(divName)
             document.querySelector('#area')?.appendChild(divParent);
@@ -136,6 +136,7 @@ class Drawer {
             }
             const ballDiv = document.querySelector(`#ball_${index}`);
             ballDiv?.animate(ball.getBallRoute(),animationOption);
+            ballDiv.style.display = 'block';
         })
     }
 
