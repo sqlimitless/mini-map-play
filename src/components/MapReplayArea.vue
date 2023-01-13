@@ -37,11 +37,18 @@ function move() {
 
 class Route{
     private transform:string;
+    private x:number;
+    private y:number;
     constructor(x:number,y:number){
-        this.transform = `translate(${x}px, ${y}px)`;
+      this.x = x;
+      this.y = y;
+      this.transform = `translate(${x}px, ${y}px)`;
     }
     public getTransform():string{
         return this.transform;
+    }
+    getXY():{x:string,y:string}{
+      return {x: this.x.toString(),y: this.y.toString()}
     }
 }
 
@@ -79,6 +86,10 @@ class Ball {
         });
         return arr;
     }
+
+    getFirstPosition = ():{x:string,y:string} => {
+      return this.ballRoute[0].getXY();
+    }
 }
 
 class Drawer {
@@ -95,26 +106,35 @@ class Drawer {
          * #area에 append
          */
         this.balls.forEach((ball:Ball,index:number) => {
+            const divParent = document.createElement('div');
+            const divName = document.createElement('div');
             const divElem = document.createElement('div');
             divElem.className = 'ball';
-            divElem.style.cssText = 'position:relative; width:10px; height: 10px; border-radius: 50%; border: 1px solid;'
-            divElem.setAttribute('id',`ball_${index}`);
-            divElem.innerText = ball.getBallName();
-            document.querySelector('#area')?.appendChild(divElem);
+            const position:{x:string,y:string} = ball.getFirstPosition();
+            const backColor:string = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+            divElem.style.cssText = `float:left; position:relative; width:10px; height: 10px; border-radius: 50%; border: 1px solid; left: ${position.x}px; top: ${position.y}px; background-color:${backColor}`
+            divParent.setAttribute('id',`ball_${index}`);
+            divParent.style.position = 'absolute';
+            divName.innerText = ball.getBallName();
+            divName.style.float = 'left';
+            divParent.appendChild(divElem)
+            divParent.appendChild(divName)
+            document.querySelector('#area')?.appendChild(divParent);
         })
     }
 
     move = () => {
         /**
          * 각 ball을 경로대로 움직이게 animate 부여
-         * 옵션값은 바로 시작 안하게... TODO
+         * 옵션값 한 좌표당 2초, 끝나고 마지막 상태 유지
          */
-        const animationOption = {
-            duration: 2000
-        }
+
          this.balls.forEach((ball:Ball,index:number) => {
+            const animationOption = {
+              duration: 2000 * ball.getBallRoute().length,
+              fill: 'forwards'
+            }
             const ballDiv = document.querySelector(`#ball_${index}`);
-            console.log(ballDiv,ball.getBallRoute())
             ballDiv?.animate(ball.getBallRoute(),animationOption);
         })
     }
